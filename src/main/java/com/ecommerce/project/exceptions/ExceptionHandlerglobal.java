@@ -1,5 +1,7 @@
 package com.ecommerce.project.exceptions;
 
+import com.ecommerce.project.payload.APIResponse;
+import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -13,6 +15,7 @@ import java.util.Map;
 @RestControllerAdvice
 public class ExceptionHandlerglobal {
 
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String,String>> MyMethodNotValidException(MethodArgumentNotValidException e){
         Map<String,String> response = new HashMap<>();
@@ -22,5 +25,18 @@ public class ExceptionHandlerglobal {
             response.put(fieldName, message);
         });
         return new ResponseEntity<Map<String, String>>(response, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(ConfigDataResourceNotFoundException.class)
+    public ResponseEntity<APIResponse> myResourceNotFoundException(ConfigDataResourceNotFoundException e) {
+        String message = e.getMessage();
+        APIResponse apiResponse = new APIResponse(message, false);
+        return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(APIException.class)
+    public ResponseEntity<APIResponse> myAPIException(APIException e) {
+        String message = e.getMessage();
+        APIResponse apiResponse = new APIResponse(message, false);
+        return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
     }
 }
