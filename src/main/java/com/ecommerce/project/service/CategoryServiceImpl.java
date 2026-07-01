@@ -39,9 +39,9 @@ public class CategoryServiceImpl implements CategoryService {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, sortbyorder);
         Page<Category> categoryPage = categoryRepository.findAll(pageable);
         List<Category> categories = categoryPage.getContent();
-        if (categories.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found");
-        }
+//        if (categories.isEmpty()) {
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found");
+//        }
 
 
         // manual mapping
@@ -101,6 +101,7 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
+        categoryRepository.delete(category);
 
         return modelMapper.map(category,CategoryDTO.class);
     }

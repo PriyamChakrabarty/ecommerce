@@ -76,7 +76,7 @@ public class CategoryController {
             description = "Deletes a category using its ID."
     )
     @DeleteMapping("/admin/categories/{id}")
-    public ResponseEntity<CategoryDTO> deleteCatagory(@PathVariable int id) {
+    public ResponseEntity<CategoryDTO> deleteCategory(@PathVariable int id) {
         CategoryDTO categoryDTO = new CategoryDTO();
         try {
         categoryDTO  = catagoryService.deletecatagory(id);
@@ -94,7 +94,7 @@ public class CategoryController {
             description = "Updates an existing category."
     )
     @PutMapping("/public/categories/{id}")
-    public ResponseEntity<CategoryDTO> updateCatagory(@RequestBody CategoryDTO category, @PathVariable int id) {
+    public ResponseEntity<CategoryDTO> updateCategory(@RequestBody CategoryDTO category, @PathVariable int id) {
         CategoryDTO category1 = catagoryService.updateCategory(category,id);
         return new ResponseEntity<>(category1,HttpStatus.OK);
 
